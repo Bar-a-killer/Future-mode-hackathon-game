@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var from := global_position
 	var to := from + direction * speed * delta
-	var colliders := get_tree().get_nodes_in_group("monsters") + get_tree().get_nodes_in_group("walls")
+	var colliders := get_tree().get_nodes_in_group("monsters") + get_tree().get_nodes_in_group("walls") + get_tree().get_nodes_in_group("orbs")
 	var hit := CollisionUtils.find_closest_hit(from, to, colliders, RADIUS)
 	if not hit.is_empty():
 		var normal: Vector2 = hit["normal"]
@@ -27,6 +27,8 @@ func _physics_process(delta: float) -> void:
 		if target is MonsterBase:
 			target.take_damage(damage)
 			EventBus.bullet_hit_monster.emit(self, target)
+		elif target is ScoreOrb:
+			target.collect()
 		direction = direction.bounce(normal).normalized()
 		_age = 0.0
 	else:

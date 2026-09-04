@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var hp_label: Label = $Control/HPLabel
 @onready var round_label: Label = $Control/RoundLabel
+@onready var score_label: Label = $Control/ScoreLabel
 
 var _last_max_hp: int = 100
 
@@ -9,6 +10,8 @@ func _ready() -> void:
 	EventBus.player_damaged.connect(_on_player_hp_changed)
 	EventBus.player_healed.connect(_on_player_hp_changed)
 	EventBus.round_state_changed.connect(_on_round_state_changed)
+	EventBus.score_changed.connect(_on_score_changed)
+	_on_score_changed(Wallet.score)
 
 func bind_player(player: Node) -> void:
 	_last_max_hp = player.max_hp
@@ -22,3 +25,6 @@ func _update_hp_label(hp: int) -> void:
 
 func _on_round_state_changed(_new_state: int, _old_state: int) -> void:
 	round_label.text = "Round %d" % RoundManager.current_round
+
+func _on_score_changed(new_score: int) -> void:
+	score_label.text = "Score: %d" % new_score

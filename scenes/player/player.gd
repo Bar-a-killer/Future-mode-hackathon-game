@@ -11,9 +11,12 @@ const MAX_AIM_RAY_LENGTH := 2000.0
 
 @export var max_hp: int = 100
 
+const LANE_MOVE_TIME := 0.4
+
 var hp: int
 var ball_count: int = BASE_BALL_COUNT
 var can_aim: bool = false
+var current_lane_index: int = 2
 
 var _dragging: bool = false
 var _drag_start: Vector2
@@ -64,7 +67,7 @@ func _is_valid_direction(dir: Vector2) -> bool:
 func _update_aim_line(direction: Vector2) -> void:
 	var from := muzzle.global_position
 	var to := from + direction * MAX_AIM_RAY_LENGTH
-	var colliders := get_tree().get_nodes_in_group("monsters") + get_tree().get_nodes_in_group("walls")
+	var colliders := get_tree().get_nodes_in_group("monsters") + get_tree().get_nodes_in_group("walls") + get_tree().get_nodes_in_group("orbs")
 	var hit := CollisionUtils.find_closest_hit(from, to, colliders)
 	var end_point: Vector2 = hit["point"] if not hit.is_empty() else to
 	aim_line.points = [to_local(from), to_local(end_point)]
@@ -111,3 +114,16 @@ func heal(amount: int) -> void:
 
 func add_ball_count(amount: int) -> void:
 	ball_count += amount
+
+func move_to_random_lane() -> Tween:
+	var positions := GridManager.LANE_POSITIONS
+	var choices: Array[int] = []
+	for i in range(positions.size()):
+		if i != current_lane_index:
+			choices.append(i)
+	var new_index: int = choices.pick_random()
+	current_lane_index = new_index
+	var tween := create_tween()
+	tween.tween_property(self, "global_position", positions[new_index], LANE_MOVE_TIME)
+	tween.finished.connect(func(): EventBus.player_moved.emit(new_index))
+	return tween

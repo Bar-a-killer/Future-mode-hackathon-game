@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/monsters/monster_base.tscn" id="1"]
+[ext_resource type="Resource" path="res://resources/monsters/data/small_ranged_special_stats.tres" id="2"]
+
+[node name="SmallRangedSpecial" instance=ExtResource("1")]
+stats = ExtResource("2")
+
+[node name="Visual" parent="."]
+color = Color(0.55, 0.2, 0.85, 1)
+polygon = PackedVector2Array(-25, -25, 25, -25, 25, 25, -25, 25)
