@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"wave_shot"
+display_name = "波浪狀"
+effect_type = 2
+description = "子彈以波浪狀軌跡飛行"

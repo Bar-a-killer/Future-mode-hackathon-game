@@ -83,17 +83,23 @@ func _on_fire_timer_timeout() -> void:
 	if _balls_to_fire <= 0:
 		_fire_timer.stop()
 		return
-	_spawn_bullet(_fire_direction)
+	for params in ItemManager.build_bullet_params():
+		_spawn_bullet(_fire_direction, params)
 	_balls_to_fire -= 1
 	if _balls_to_fire <= 0:
 		_fire_timer.stop()
 
-func _spawn_bullet(direction: Vector2) -> void:
+func _spawn_bullet(direction: Vector2, params: Dictionary) -> void:
 	var bullet: Bullet = BULLET_SCENE.instantiate()
+	var angle_offset: float = params.get("angle_offset", 0.0)
 	bullet.global_position = muzzle.global_position
-	bullet.direction = direction
+	bullet.direction = direction.rotated(deg_to_rad(angle_offset))
 	bullet.damage = BASE_DAMAGE
 	bullet.speed = BULLET_SPEED
+	bullet.element = params.get("element", &"")
+	bullet.size_scale = params.get("size_scale", 1.0)
+	bullet.wave_enabled = params.get("wave_enabled", false)
+	bullet.portal_enabled = params.get("portal_enabled", false)
 	get_tree().current_scene.add_child(bullet)
 	_balls_in_flight += 1
 	bullet.tree_exiting.connect(_on_bullet_resolved, CONNECT_ONE_SHOT)

@@ -23,10 +23,12 @@ const MAX_WAVE_MONSTER_COUNT := 6
 const WAVE_SPAWN_ROW := 1
 const MONSTER_ATTACK_DELAY := 0.5
 const POST_VOLLEY_DELAY := 0.5
+const SLOT_MACHINE_INTERVAL := 3
 
 var state: State = State.WAVE_SPAWN
 var current_round: int = 1
 var player: Node = null
+var slot_machine_ui: Node = null
 var next_movement_round: int = 0
 
 var _attack_timer: Timer
@@ -46,8 +48,9 @@ func _ready() -> void:
 
 	EventBus.player_volley_resolved.connect(_on_volley_resolved)
 
-func start(player_node: Node) -> void:
+func start(player_node: Node, slot_ui: Node) -> void:
 	player = player_node
+	slot_machine_ui = slot_ui
 	current_round = 1
 	_roll_next_movement_round()
 	GridManager.reset()
@@ -70,13 +73,13 @@ func _enter_state(s: State) -> void:
 		State.PLAYER_AIM:
 			_enter_player_aim()
 		State.RESOLVE:
-			_set_state(State.MONSTER_ATTACK)
+			_enter_resolve()
 		State.MONSTER_ATTACK:
 			_enter_monster_attack()
 		State.MOVEMENT_CHECK:
 			_enter_movement_check()
 		State.SLOT_MACHINE_CHECK:
-			_set_state(State.GAME_OVER_CHECK)
+			_enter_slot_machine_check()
 		State.GAME_OVER_CHECK:
 			_enter_game_over_check()
 		State.GAME_OVER:
@@ -107,6 +110,11 @@ func _on_post_volley_timeout() -> void:
 	if state == State.PLAYER_AIM:
 		_set_state(State.RESOLVE)
 
+func _enter_resolve() -> void:
+	for monster in get_tree().get_nodes_in_group("monsters"):
+		monster.tick_status()
+	_set_state(State.MONSTER_ATTACK)
+
 func _enter_monster_attack() -> void:
 	_attack_timer.start()
 	await _attack_timer.timeout
@@ -126,6 +134,14 @@ func _enter_movement_check() -> void:
 		await tween.finished
 		_roll_next_movement_round()
 	_set_state(State.SLOT_MACHINE_CHECK)
+
+func _enter_slot_machine_check() -> void:
+	if current_round % SLOT_MACHINE_INTERVAL == 0:
+		var choices := ItemManager.pick_three_distinct()
+		slot_machine_ui.show_choices(choices)
+		var item: ItemData = await EventBus.item_selected
+		ItemManager.apply_item(item)
+	_set_state(State.GAME_OVER_CHECK)
 
 func _enter_game_over_check() -> void:
 	if player.hp <= 0:

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"portal"
+display_name = "傳送門"
+effect_type = 2
+description = "攻擊球從固定位置傳送到另一個固定位置"
