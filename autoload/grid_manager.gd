@@ -32,7 +32,7 @@ func vacate(cell: Vector2i) -> void:
 	_occupancy.erase(cell)
 
 func get_wave_spawn_cells(count: int, row: int = 1) -> Array[Vector2i]:
-	var cols: Array = range(GRID_COLS)
+	var cols: Array = range(GRID_COLS).filter(func(c): return not is_occupied(Vector2i(c, row)))
 	cols.shuffle()
 	var chosen: Array = cols.slice(0, count)
 	chosen.sort()

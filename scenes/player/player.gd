@@ -7,7 +7,7 @@ const BASE_DAMAGE := 5
 const BULLET_SPEED := 600.0
 const FIRE_INTERVAL := 0.06
 const MIN_DRAG_DISTANCE := 20.0
-const AIM_LINE_LENGTH := 80.0
+const MAX_AIM_RAY_LENGTH := 2000.0
 
 @export var max_hp: int = 100
 
@@ -39,19 +39,35 @@ func _input(event: InputEvent) -> void:
 		if touch_event.pressed:
 			_dragging = true
 			_drag_start = touch_event.position
-			aim_line.visible = true
+			aim_line.visible = false
 			aim_line.points = [Vector2.ZERO, Vector2.ZERO]
 		elif _dragging:
 			_dragging = false
 			aim_line.visible = false
 			var drag_vector: Vector2 = touch_event.position - _drag_start
 			if drag_vector.length() >= MIN_DRAG_DISTANCE:
-				_start_volley(drag_vector.normalized())
+				var dir := drag_vector.normalized()
+				if _is_valid_direction(dir):
+					_start_volley(dir)
 	elif event is InputEventScreenDrag and _dragging:
 		var drag_event := event as InputEventScreenDrag
 		var drag_vector: Vector2 = drag_event.position - _drag_start
-		var shown: Vector2 = drag_vector if drag_vector.length() < AIM_LINE_LENGTH else drag_vector.normalized() * AIM_LINE_LENGTH
-		aim_line.points = [Vector2.ZERO, shown]
+		if drag_vector.length() >= MIN_DRAG_DISTANCE and _is_valid_direction(drag_vector.normalized()):
+			aim_line.visible = true
+			_update_aim_line(drag_vector.normalized())
+		else:
+			aim_line.visible = false
+
+func _is_valid_direction(dir: Vector2) -> bool:
+	return dir.y <= 0.0
+
+func _update_aim_line(direction: Vector2) -> void:
+	var from := muzzle.global_position
+	var to := from + direction * MAX_AIM_RAY_LENGTH
+	var colliders := get_tree().get_nodes_in_group("monsters") + get_tree().get_nodes_in_group("walls")
+	var hit := CollisionUtils.find_closest_hit(from, to, colliders)
+	var end_point: Vector2 = hit["point"] if not hit.is_empty() else to
+	aim_line.points = [to_local(from), to_local(end_point)]
 
 func _start_volley(direction: Vector2) -> void:
 	can_aim = false

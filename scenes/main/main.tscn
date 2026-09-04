@@ -1,15 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/ui/game_over_screen.tscn" id="4"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_side"]
-size = Vector2(20, 1240)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_back"]
-size = Vector2(670, 20)
+[ext_resource type="Script" path="res://scenes/main/wall.gd" id="5"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1")
@@ -21,37 +16,28 @@ position = Vector2(360, 1000)
 
 [node name="GameOverScreen" parent="." instance=ExtResource("4")]
 
-[node name="LeftWall" type="StaticBody2D" parent="."]
+[node name="LeftWall" type="Node2D" parent="."]
 position = Vector2(35, 700)
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
-shape = SubResource("RectangleShape2D_side")
+script = ExtResource("5")
+half_size = Vector2(10, 620)
 
 [node name="Visual" type="Polygon2D" parent="LeftWall"]
 color = Color(0.4, 0.4, 0.45, 1)
 polygon = PackedVector2Array(-10, -620, 10, -620, 10, 620, -10, 620)
 
-[node name="RightWall" type="StaticBody2D" parent="."]
+[node name="RightWall" type="Node2D" parent="."]
 position = Vector2(685, 700)
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
-shape = SubResource("RectangleShape2D_side")
+script = ExtResource("5")
+half_size = Vector2(10, 620)
 
 [node name="Visual" type="Polygon2D" parent="RightWall"]
 color = Color(0.4, 0.4, 0.45, 1)
 polygon = PackedVector2Array(-10, -620, 10, -620, 10, 620, -10, 620)
 
-[node name="BackWall" type="StaticBody2D" parent="."]
+[node name="BackWall" type="Node2D" parent="."]
 position = Vector2(360, 80)
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BackWall"]
-shape = SubResource("RectangleShape2D_back")
+script = ExtResource("5")
+half_size = Vector2(335, 10)
 
 [node name="Visual" type="Polygon2D" parent="BackWall"]
 color = Color(0.4, 0.4, 0.45, 1)

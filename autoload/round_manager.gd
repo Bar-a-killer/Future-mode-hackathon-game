@@ -12,28 +12,30 @@ enum State {
 }
 
 const MONSTER_SCENE: PackedScene = preload("res://scenes/monsters/small_melee.tscn")
-const WAVE_MONSTER_COUNT := 6
-const AIM_TIMEOUT := 8.0
+const MIN_WAVE_MONSTER_COUNT := 4
+const MAX_WAVE_MONSTER_COUNT := 6
+const WAVE_SPAWN_ROW := 1
 const MONSTER_ATTACK_DELAY := 0.5
+const POST_VOLLEY_DELAY := 0.5
 
 var state: State = State.WAVE_SPAWN
 var current_round: int = 1
 var player: Node = null
 
-var _aim_timer: Timer
 var _attack_timer: Timer
+var _post_volley_timer: Timer
 
 func _ready() -> void:
-	_aim_timer = Timer.new()
-	_aim_timer.one_shot = true
-	_aim_timer.wait_time = AIM_TIMEOUT
-	add_child(_aim_timer)
-	_aim_timer.timeout.connect(_on_aim_timeout)
-
 	_attack_timer = Timer.new()
 	_attack_timer.one_shot = true
 	_attack_timer.wait_time = MONSTER_ATTACK_DELAY
 	add_child(_attack_timer)
+
+	_post_volley_timer = Timer.new()
+	_post_volley_timer.one_shot = true
+	_post_volley_timer.wait_time = POST_VOLLEY_DELAY
+	add_child(_post_volley_timer)
+	_post_volley_timer.timeout.connect(_on_post_volley_timeout)
 
 	EventBus.player_volley_resolved.connect(_on_volley_resolved)
 
@@ -69,30 +71,27 @@ func _enter_state(s: State) -> void:
 			EventBus.game_over.emit()
 
 func _enter_wave_spawn() -> void:
-	if get_tree().get_nodes_in_group("monsters").is_empty():
-		EventBus.wave_spawn_requested.emit(current_round)
-		for cell in GridManager.get_wave_spawn_cells(WAVE_MONSTER_COUNT):
-			var monster: MonsterBase = MONSTER_SCENE.instantiate()
-			monster.grid_pos = cell
-			monster.position = GridManager.cell_to_world(cell)
-			get_tree().current_scene.add_child(monster)
-			GridManager.occupy(cell, monster)
-			EventBus.monster_spawned.emit(monster)
+	EventBus.wave_spawn_requested.emit(current_round)
+	var monster_count := randi_range(MIN_WAVE_MONSTER_COUNT, MAX_WAVE_MONSTER_COUNT)
+	for cell in GridManager.get_wave_spawn_cells(monster_count, WAVE_SPAWN_ROW):
+		var monster: MonsterBase = MONSTER_SCENE.instantiate()
+		monster.grid_pos = cell
+		monster.position = GridManager.cell_to_world(cell)
+		get_tree().current_scene.add_child(monster)
+		GridManager.occupy(cell, monster)
+		EventBus.monster_spawned.emit(monster)
 	_set_state(State.PLAYER_AIM)
 
 func _enter_player_aim() -> void:
 	player.can_aim = true
-	_aim_timer.start()
-
-func _on_aim_timeout() -> void:
-	if state == State.PLAYER_AIM:
-		player.can_aim = false
-		_set_state(State.RESOLVE)
 
 func _on_volley_resolved() -> void:
 	if state == State.PLAYER_AIM:
-		_aim_timer.stop()
 		player.can_aim = false
+		_post_volley_timer.start()
+
+func _on_post_volley_timeout() -> void:
+	if state == State.PLAYER_AIM:
 		_set_state(State.RESOLVE)
 
 func _enter_monster_attack() -> void:
@@ -100,7 +99,11 @@ func _enter_monster_attack() -> void:
 	await _attack_timer.timeout
 	if state != State.MONSTER_ATTACK:
 		return
-	for monster in get_tree().get_nodes_in_group("monsters"):
+	var monsters := get_tree().get_nodes_in_group("monsters")
+	monsters.sort_custom(func(a, b): return a.grid_pos.y > b.grid_pos.y)
+	for monster in monsters:
+		monster.advance()
+	for monster in monsters:
 		monster.execute_attack(player)
 	_set_state(State.MOVEMENT_CHECK)
 
