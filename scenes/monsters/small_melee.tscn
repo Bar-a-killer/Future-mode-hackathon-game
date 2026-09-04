@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/monsters/monster_base.tscn" id="1"]
+[ext_resource type="Resource" path="res://resources/monsters/data/small_melee_stats.tres" id="2"]
+
+[node name="SmallMelee" instance=ExtResource("1")]
+stats = ExtResource("2")

@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_over_screen.tscn" id="4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side"]
+size = Vector2(20, 1240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_back"]
+size = Vector2(670, 20)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(360, 1000)
+
+[node name="HUD" parent="." instance=ExtResource("3")]
+
+[node name="GameOverScreen" parent="." instance=ExtResource("4")]
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(35, 700)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_side")
+
+[node name="Visual" type="Polygon2D" parent="LeftWall"]
+color = Color(0.4, 0.4, 0.45, 1)
+polygon = PackedVector2Array(-10, -620, 10, -620, 10, 620, -10, 620)
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(685, 700)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_side")
+
+[node name="Visual" type="Polygon2D" parent="RightWall"]
+color = Color(0.4, 0.4, 0.45, 1)
+polygon = PackedVector2Array(-10, -620, 10, -620, 10, 620, -10, 620)
+
+[node name="BackWall" type="StaticBody2D" parent="."]
+position = Vector2(360, 80)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackWall"]
+shape = SubResource("RectangleShape2D_back")
+
+[node name="Visual" type="Polygon2D" parent="BackWall"]
+color = Color(0.4, 0.4, 0.45, 1)
+polygon = PackedVector2Array(-335, -10, 335, -10, 335, 10, -335, 10)

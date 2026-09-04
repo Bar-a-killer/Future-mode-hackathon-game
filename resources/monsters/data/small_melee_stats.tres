@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MonsterStats" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/monsters/monster_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Small Melee"
+max_hp = 20
+attack_power = 10
+is_ranged = false
+frontal_damage_reduction = 0.0
+score_orb_drop_chance = 0.3
+score_orb_value = 10
