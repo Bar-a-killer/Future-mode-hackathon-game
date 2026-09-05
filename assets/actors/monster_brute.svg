@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="168" height="168" viewBox="0 0 168 168">
+  <defs>
+    <linearGradient id="bruteBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b3352c"/>
+      <stop offset="0.45" stop-color="#701310"/>
+      <stop offset="1" stop-color="#310607"/>
+    </linearGradient>
+    <linearGradient id="brutePlate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8d2a22"/>
+      <stop offset="1" stop-color="#4a0d0c"/>
+    </linearGradient>
+    <radialGradient id="bruteEye" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff0f0"/>
+      <stop offset="0.35" stop-color="#ff5a45"/>
+      <stop offset="1" stop-color="#ff2200" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="84" cy="150" rx="56" ry="12" fill="#000000" fill-opacity="0.4"/>
+
+  <path fill="#1e0405" d="M18 52 L44 20 L124 20 L150 52 L146 112 L112 148 L56 148 L22 112 Z"/>
+  <path fill="url(#bruteBody)" stroke="#ff7a63" stroke-opacity="0.5" stroke-width="3"
+        d="M24 54 L48 26 L120 26 L144 54 L140 109 L109 142 L59 142 L28 109 Z"/>
+
+  <path fill="url(#brutePlate)" stroke="#ff9179" stroke-opacity="0.35" stroke-width="2"
+        d="M10 62 L34 40 L44 70 L22 92 Z"/>
+  <path fill="url(#brutePlate)" stroke="#ff9179" stroke-opacity="0.35" stroke-width="2"
+        d="M158 62 L134 40 L124 70 L146 92 Z"/>
+
+  <path fill="#ff9179" fill-opacity="0.18" d="M48 26 L120 26 L110 54 L58 54 Z"/>
+  <path stroke="#ffb3a0" stroke-opacity="0.35" stroke-width="2.4" fill="none"
+        d="M40 74 L52 96 M128 74 L116 96 M84 60 L84 96"/>
+
+  <circle cx="60" cy="76" r="17" fill="url(#bruteEye)"/>
+  <circle cx="108" cy="76" r="17" fill="url(#bruteEye)"/>
+  <circle cx="84" cy="48" r="12" fill="url(#bruteEye)"/>
+  <circle cx="60" cy="76" r="6.5" fill="#fff4f2"/>
+  <circle cx="108" cy="76" r="6.5" fill="#fff4f2"/>
+  <circle cx="84" cy="48" r="4.5" fill="#fff4f2"/>
+
+  <path fill="#280405" d="M54 104 L114 104 L104 128 L64 128 Z"/>
+  <path fill="#ffe0d2" fill-opacity="0.92"
+        d="M62 104 L70 122 L78 104 Z M82 104 L90 124 L98 104 Z"/>
+  <path fill="#5c100e" d="M22 112 L6 132 L30 134 Z M146 112 L162 132 L138 134 Z"/>
+</svg>

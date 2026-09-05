@@ -1,6 +1,87 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scenes/slot_machine/slot_machine_ui.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="Cabinet"]
+bg_color = Color(0.62, 0.13, 0.17, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 0.79, 0.31, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="Window"]
+bg_color = Color(0.14, 0.09, 0.1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.86, 0.65, 0.24, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="ReelNormal"]
+bg_color = Color(0.97, 0.95, 0.88, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.79, 0.73, 0.62, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="ReelHover"]
+bg_color = Color(1, 0.98, 0.87, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.72, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="ReelPressed"]
+bg_color = Color(1, 0.89, 0.6, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.55, 0.12, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="Knob"]
+bg_color = Color(0.86, 0.19, 0.2, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.79, 0.31, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="Marker"]
+bg_color = Color(1, 0.79, 0.31, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="SlotMachineUI" type="CanvasLayer"]
 script = ExtResource("1")
@@ -14,34 +95,152 @@ anchor_bottom = 1.0
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0, 0, 0.75)
+color = Color(0.03, 0.04, 0.09, 0.78)
 
-[node name="Title" type="Label" parent="Panel"]
-offset_left = 110.0
-offset_top = 380.0
-offset_right = 610.0
-offset_bottom = 420.0
-theme_override_font_sizes/font_size = 32
+[node name="LeverBase" type="Panel" parent="Panel"]
+offset_left = 636.0
+offset_top = 614.0
+offset_right = 676.0
+offset_bottom = 646.0
+theme_override_styles/panel = SubResource("Marker")
+
+[node name="Lever" type="Control" parent="Panel"]
+offset_left = 656.0
+offset_top = 620.0
+offset_right = 656.0
+offset_bottom = 620.0
+
+[node name="Rod" type="ColorRect" parent="Panel/Lever"]
+offset_left = -7.0
+offset_top = -132.0
+offset_right = 7.0
+offset_bottom = 4.0
+color = Color(0.78, 0.62, 0.28, 1)
+
+[node name="Knob" type="Panel" parent="Panel/Lever"]
+offset_left = -24.0
+offset_top = -156.0
+offset_right = 24.0
+offset_bottom = -108.0
+theme_override_styles/panel = SubResource("Knob")
+
+[node name="Cabinet" type="Panel" parent="Panel"]
+offset_left = 40.0
+offset_top = 320.0
+offset_right = 640.0
+offset_bottom = 820.0
+theme_override_styles/panel = SubResource("Cabinet")
+
+[node name="Title" type="Label" parent="Panel/Cabinet"]
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 580.0
+offset_bottom = 68.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.44, 1)
+theme_override_colors/font_shadow_color = Color(0.28, 0.03, 0.05, 0.9)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 34
 horizontal_alignment = 1
-text = "選擇一個技能"
+vertical_alignment = 1
+text = "SLOT"
 
-[node name="Button1" type="Button" parent="Panel"]
-offset_left = 110.0
-offset_top = 460.0
-offset_right = 610.0
-offset_bottom = 560.0
-text = "Item 1"
+[node name="MarkerLeft" type="Panel" parent="Panel/Cabinet"]
+offset_left = 6.0
+offset_top = 210.0
+offset_right = 20.0
+offset_bottom = 226.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Marker")
 
-[node name="Button2" type="Button" parent="Panel"]
-offset_left = 110.0
-offset_top = 580.0
-offset_right = 610.0
-offset_bottom = 680.0
-text = "Item 2"
+[node name="MarkerRight" type="Panel" parent="Panel/Cabinet"]
+offset_left = 580.0
+offset_top = 210.0
+offset_right = 594.0
+offset_bottom = 226.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Marker")
 
-[node name="Button3" type="Button" parent="Panel"]
-offset_left = 110.0
-offset_top = 700.0
-offset_right = 610.0
-offset_bottom = 800.0
-text = "Item 3"
+[node name="Window" type="Panel" parent="Panel/Cabinet"]
+offset_left = 24.0
+offset_top = 88.0
+offset_right = 576.0
+offset_bottom = 348.0
+theme_override_styles/panel = SubResource("Window")
+
+[node name="Desc" type="Label" parent="Panel/Cabinet"]
+offset_left = 30.0
+offset_top = 364.0
+offset_right = 570.0
+offset_bottom = 480.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.82, 1)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text = ""
+
+[node name="Reel1" type="Button" parent="Panel/Cabinet/Window"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 180.0
+offset_bottom = 248.0
+theme_override_styles/normal = SubResource("ReelNormal")
+theme_override_styles/hover = SubResource("ReelHover")
+theme_override_styles/pressed = SubResource("ReelPressed")
+theme_override_styles/disabled = SubResource("ReelNormal")
+text = ""
+
+[node name="Clip" type="Control" parent="Panel/Cabinet/Window/Reel1"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+clip_contents = true
+
+[node name="Strip" type="Control" parent="Panel/Cabinet/Window/Reel1/Clip"]
+mouse_filter = 2
+
+[node name="Reel2" type="Button" parent="Panel/Cabinet/Window"]
+offset_left = 192.0
+offset_top = 12.0
+offset_right = 360.0
+offset_bottom = 248.0
+theme_override_styles/normal = SubResource("ReelNormal")
+theme_override_styles/hover = SubResource("ReelHover")
+theme_override_styles/pressed = SubResource("ReelPressed")
+theme_override_styles/disabled = SubResource("ReelNormal")
+text = ""
+
+[node name="Clip" type="Control" parent="Panel/Cabinet/Window/Reel2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+clip_contents = true
+
+[node name="Strip" type="Control" parent="Panel/Cabinet/Window/Reel2/Clip"]
+mouse_filter = 2
+
+[node name="Reel3" type="Button" parent="Panel/Cabinet/Window"]
+offset_left = 372.0
+offset_top = 12.0
+offset_right = 540.0
+offset_bottom = 248.0
+theme_override_styles/normal = SubResource("ReelNormal")
+theme_override_styles/hover = SubResource("ReelHover")
+theme_override_styles/pressed = SubResource("ReelPressed")
+theme_override_styles/disabled = SubResource("ReelNormal")
+text = ""
+
+[node name="Clip" type="Control" parent="Panel/Cabinet/Window/Reel3"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+clip_contents = true
+
+[node name="Strip" type="Control" parent="Panel/Cabinet/Window/Reel3/Clip"]
+mouse_filter = 2

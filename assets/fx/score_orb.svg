@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <defs>
+    <radialGradient id="coinGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0.5" stop-color="#ffd54a" stop-opacity="0.45"/>
+      <stop offset="0.78" stop-color="#ffb300" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ff9800" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="coinFace" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#fff3c4"/>
+      <stop offset="0.45" stop-color="#ffce3d"/>
+      <stop offset="1" stop-color="#e08a00"/>
+    </linearGradient>
+    <linearGradient id="coinEdge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe89a"/>
+      <stop offset="1" stop-color="#b86a00"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="80" cy="80" r="78" fill="url(#coinGlow)"/>
+  <circle cx="80" cy="80" r="52" fill="url(#coinEdge)"/>
+  <circle cx="80" cy="80" r="44" fill="url(#coinFace)"/>
+  <path fill="#ffffff" fill-opacity="0.55"
+        d="M80 40 L92 68 L120 80 L92 92 L80 120 L68 92 L40 80 L68 68 Z"/>
+  <circle cx="80" cy="80" r="13" fill="#fffbe8"/>
+  <ellipse cx="62" cy="58" rx="14" ry="9" fill="#ffffff" fill-opacity="0.6" transform="rotate(-35 62 58)"/>
+  <path stroke="#ffffff" stroke-opacity="0.35" stroke-width="3" fill="none"
+        d="M44 100 A 44 44 0 0 0 116 100"/>
+</svg>

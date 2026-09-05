@@ -38,7 +38,8 @@ func apply_item(item: ItemData) -> void:
 			current_active_modifier = item
 			if item.id == &"score_x2":
 				Wallet.apply_score_multiplier(2.0)
-			EventBus.active_modifier_changed.emit(item)
+	# 一律發一次（沒有修飾器時為 null），監聽者才知道上一個效果已經被退掉
+	EventBus.active_modifier_changed.emit(current_active_modifier)
 	EventBus.item_effect_applied.emit(item)
 
 func _clear_current_modifier() -> void:

@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://picture/隨機回復藥水.png" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -8,3 +9,5 @@ id = &"random_heal"
 display_name = "隨機回血"
 effect_type = 0
 description = "隨機恢復5點到全滿的生命值"
+icon = ExtResource("2")
+icon_region = Rect2(304, 148, 699, 913)

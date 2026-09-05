@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/monsters/monster_base.tscn" id="1"]
 [ext_resource type="Resource" path="res://resources/monsters/data/big_melee_special_stats.tres" id="2"]
+[ext_resource type="Texture2D" path="res://assets/actors/monster_shield_brute.svg" id="3"]
 
 [node name="BigMeleeSpecial" instance=ExtResource("1")]
 stats = ExtResource("2")
 
 [node name="Visual" parent="."]
-color = Color(0.95, 0.55, 0.1, 1)
-polygon = PackedVector2Array(-42, -42, 42, -42, 42, 42, -42, 42)
+texture = ExtResource("3")

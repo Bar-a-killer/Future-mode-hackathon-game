@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://picture/三倍發射量.png" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -8,3 +9,5 @@ id = &"triple_shot"
 display_name = "三倍發射量"
 effect_type = 2
 description = "左右各多發射一輪相同數量的球"
+icon = ExtResource("2")
+icon_region = Rect2(264, 244, 804, 607)

@@ -6,7 +6,8 @@ const BASE_BALL_COUNT := 10
 const BASE_DAMAGE := 5
 const BULLET_SPEED := 600.0
 const FIRE_INTERVAL := 0.06
-const MIN_DRAG_DISTANCE := 20.0
+const MIN_AIM_DISTANCE := 40.0
+const MAX_AIM_ANGLE_DEG := 80.0
 const MAX_AIM_RAY_LENGTH := 2000.0
 
 @export var max_hp: int = 100
@@ -15,12 +16,17 @@ const LANE_MOVE_TIME := 0.4
 
 var hp: int
 var ball_count: int = BASE_BALL_COUNT
-var can_aim: bool = false
+var can_aim: bool = false:
+	set(value):
+		can_aim = value
+		if not value:
+			_aim_ready = false
+			if aim_line:
+				aim_line.visible = false
 var current_lane_index: int = 2
 
-var _dragging: bool = false
-var _drag_start: Vector2
 var _fire_direction: Vector2 = Vector2.UP
+var _aim_ready: bool = false
 var _balls_in_flight: int = 0
 var _balls_to_fire: int = 0
 
@@ -37,32 +43,35 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if not can_aim:
 		return
-	if event is InputEventScreenTouch:
+	if event is InputEventMouseMotion:
+		_update_aim((event as InputEventMouseMotion).position)
+	elif event is InputEventScreenDrag:
+		_update_aim((event as InputEventScreenDrag).position)
+	elif event is InputEventScreenTouch:
 		var touch_event := event as InputEventScreenTouch
-		if touch_event.pressed:
-			_dragging = true
-			_drag_start = touch_event.position
-			aim_line.visible = false
-			aim_line.points = [Vector2.ZERO, Vector2.ZERO]
-		elif _dragging:
-			_dragging = false
-			aim_line.visible = false
-			var drag_vector: Vector2 = touch_event.position - _drag_start
-			if drag_vector.length() >= MIN_DRAG_DISTANCE:
-				var dir := drag_vector.normalized()
-				if _is_valid_direction(dir):
-					_start_volley(dir)
-	elif event is InputEventScreenDrag and _dragging:
-		var drag_event := event as InputEventScreenDrag
-		var drag_vector: Vector2 = drag_event.position - _drag_start
-		if drag_vector.length() >= MIN_DRAG_DISTANCE and _is_valid_direction(drag_vector.normalized()):
-			aim_line.visible = true
-			_update_aim_line(drag_vector.normalized())
-		else:
-			aim_line.visible = false
+		_update_aim(touch_event.position)
+		if not touch_event.pressed and _aim_ready:
+			_start_volley(_fire_direction)
 
-func _is_valid_direction(dir: Vector2) -> bool:
-	return dir.y <= 0.0
+# 以「滑鼠 / 觸控點相對角色的角度」決定瞄準方向
+func _update_aim(screen_pos: Vector2) -> void:
+	var offset: Vector2 = _screen_to_world(screen_pos) - global_position
+	_aim_ready = offset.length() >= MIN_AIM_DISTANCE
+	if not _aim_ready:
+		aim_line.visible = false
+		return
+	_fire_direction = _clamp_aim_direction(offset.normalized())
+	aim_line.visible = true
+	_update_aim_line(_fire_direction)
+
+func _screen_to_world(screen_pos: Vector2) -> Vector2:
+	return get_viewport().get_canvas_transform().affine_inverse() * screen_pos
+
+# 只允許往上半圈射擊,並限制最大偏角,避免貼地的無效平射
+func _clamp_aim_direction(dir: Vector2) -> Vector2:
+	var limit := deg_to_rad(MAX_AIM_ANGLE_DEG)
+	var angle := clampf(Vector2.UP.angle_to(dir), -limit, limit)
+	return Vector2.UP.rotated(angle)
 
 func _update_aim_line(direction: Vector2) -> void:
 	var from := muzzle.global_position

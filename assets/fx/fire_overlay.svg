@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="fireOuter" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff2d00" stop-opacity="0.10"/>
+      <stop offset="0.28" stop-color="#ff4d0d" stop-opacity="0.80"/>
+      <stop offset="0.70" stop-color="#ff7a16" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffa62b" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="fireMid" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff6b1a" stop-opacity="0.25"/>
+      <stop offset="0.45" stop-color="#ff9d22" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffd257" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="fireCore" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffcc4d" stop-opacity="0.35"/>
+      <stop offset="0.5" stop-color="#ffe796" stop-opacity="1"/>
+      <stop offset="1" stop-color="#fffbe8" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="fireGlow" cx="0.5" cy="0.72" r="0.55">
+      <stop offset="0" stop-color="#ff6a12" stop-opacity="0.55"/>
+      <stop offset="0.6" stop-color="#ff4a08" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ff3300" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="64" cy="92" rx="60" ry="36" fill="url(#fireGlow)"/>
+
+  <path fill="url(#fireOuter)" d="M64 126 C 26 126 12 106 16 84 C 19 66 32 58 34 44 C 47 56 44 70 52 74 C 56 60 48 44 56 26 C 60 16 66 8 64 2 C 78 14 86 30 84 46 C 83 58 78 64 82 70 C 90 62 92 50 90 40 C 104 54 112 70 111 86 C 110 108 98 126 64 126 Z"/>
+
+  <path fill="url(#fireMid)" d="M64 124 C 40 124 30 110 33 93 C 36 79 47 72 50 60 C 58 70 57 80 62 84 C 67 72 62 58 68 44 C 72 34 74 28 73 22 C 84 34 90 48 88 62 C 87 72 84 78 88 82 C 93 76 94 68 93 60 C 101 72 104 84 103 94 C 101 112 88 124 64 124 Z"/>
+
+  <path fill="url(#fireCore)" d="M64 122 C 51 122 45 113 47 102 C 49 92 57 86 59 76 C 65 84 65 92 68 96 C 72 88 69 76 73 66 C 76 58 78 52 77 46 C 84 56 88 68 87 80 C 86 92 89 96 90 100 C 88 114 78 122 64 122 Z"/>
+
+  <path fill="#ffd166" fill-opacity="0.9" d="M25 44 C 30 34 28 26 24 20 C 34 26 40 36 38 46 C 36 54 30 56 26 54 C 22 52 22 48 25 44 Z"/>
+  <path fill="#ffb84d" fill-opacity="0.85" d="M104 52 C 108 42 106 34 102 28 C 113 35 118 46 115 56 C 113 63 107 65 104 62 C 100 59 101 56 104 52 Z"/>
+  <circle cx="22" cy="70" r="4" fill="#ffcc66" fill-opacity="0.75"/>
+  <circle cx="108" cy="76" r="3.4" fill="#ffb347" fill-opacity="0.7"/>
+  <circle cx="64" cy="14" r="3" fill="#fff0b8" fill-opacity="0.8"/>
+</svg>

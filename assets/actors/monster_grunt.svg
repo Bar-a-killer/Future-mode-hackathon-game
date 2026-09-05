@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140">
+  <defs>
+    <linearGradient id="gruntBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e04a3c"/>
+      <stop offset="0.5" stop-color="#a3241d"/>
+      <stop offset="1" stop-color="#4d0d0c"/>
+    </linearGradient>
+    <radialGradient id="gruntEye" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff6d8"/>
+      <stop offset="0.4" stop-color="#ffd166"/>
+      <stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="70" cy="122" rx="44" ry="10" fill="#000000" fill-opacity="0.35"/>
+
+  <path fill="#2c0708" d="M22 44 L42 20 L98 20 L118 44 L114 96 L88 120 L52 120 L26 96 Z"/>
+  <path fill="url(#gruntBody)" stroke="#ff8a6b" stroke-opacity="0.55" stroke-width="2.5"
+        d="M27 46 L45 25 L95 25 L113 46 L109 93 L86 115 L54 115 L31 93 Z"/>
+
+  <path fill="#ff9d7d" fill-opacity="0.25" d="M45 25 L95 25 L86 46 L54 46 Z"/>
+  <path stroke="#ffb199" stroke-opacity="0.4" stroke-width="2" fill="none" d="M38 58 L46 76 M102 58 L94 76"/>
+
+  <circle cx="53" cy="62" r="15" fill="url(#gruntEye)"/>
+  <circle cx="87" cy="62" r="15" fill="url(#gruntEye)"/>
+  <circle cx="53" cy="62" r="6" fill="#fffdf2"/>
+  <circle cx="87" cy="62" r="6" fill="#fffdf2"/>
+
+  <path fill="#37090a" d="M50 88 L90 88 L84 102 L56 102 Z"/>
+  <path fill="#ffd9c4" fill-opacity="0.9" d="M56 88 L62 98 L68 88 Z M72 88 L78 98 L84 88 Z"/>
+  <path fill="#7a1512" d="M27 46 L14 62 L30 66 Z M113 46 L126 62 L110 66 Z"/>
+</svg>
