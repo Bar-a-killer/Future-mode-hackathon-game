@@ -9,7 +9,7 @@ const FIRE_DURATION := 2
 const FREEZE_DURATION := 1
 const MIN_HP_ALPHA := 0.3
 const HIT_FLASH_TIME := 0.12
-const HIT_PUNCH_SCALE := 1.18
+const HIT_PUNCH_SCALE := 1.08
 const DEATH_POP_TIME := 0.18
 const DEATH_POP_SCALE := 1.6
 const FLASH_COLOR := Color(3.0, 3.0, 3.0, 1.0)
@@ -23,10 +23,12 @@ const STATUS_TINTS := {
 
 var current_hp: int
 var grid_pos: Vector2i
+var is_boss: bool = false
 
 var _status: Dictionary = {}
 var _dying: bool = false
 var _hit_tween: Tween
+var _visual_base_scale: Vector2 = Vector2.ONE
 
 @onready var _visual: Sprite2D = $Visual
 @onready var _status_overlay: Node2D = $StatusOverlay
@@ -35,6 +37,7 @@ func _ready() -> void:
 	add_to_group("monsters")
 	if stats:
 		current_hp = stats.max_hp
+	_visual_base_scale = _visual.scale
 	_status_overlay.setup(_visual_extent())
 	_refresh_visual()
 
@@ -123,6 +126,8 @@ func die() -> void:
 	if stats and randf() < stats.score_orb_drop_chance:
 		_spawn_score_orb()
 	EventBus.monster_died.emit(self, grid_pos)
+	if is_boss:
+		EventBus.boss_defeated.emit()
 	# 先退出群組，讓子彈跟回合邏輯立刻當它不存在，再播完死亡動畫
 	remove_from_group("monsters")
 	if _status_overlay:
@@ -137,11 +142,11 @@ func _play_hit_feedback() -> void:
 		_hit_tween.kill()
 	var rest := _rest_modulate()
 	_visual.modulate = Color(FLASH_COLOR.r, FLASH_COLOR.g, FLASH_COLOR.b, rest.a)
-	_visual.scale = Vector2.ONE * HIT_PUNCH_SCALE
+	_visual.scale = _visual_base_scale * HIT_PUNCH_SCALE
 	_hit_tween = create_tween()
 	_hit_tween.set_parallel(true)
 	_hit_tween.tween_property(_visual, "modulate", rest, HIT_FLASH_TIME)
-	var punch := _hit_tween.tween_property(_visual, "scale", Vector2.ONE, HIT_FLASH_TIME)
+	var punch := _hit_tween.tween_property(_visual, "scale", _visual_base_scale, HIT_FLASH_TIME)
 	punch.set_trans(Tween.TRANS_BACK)
 	punch.set_ease(Tween.EASE_OUT)
 
@@ -153,7 +158,7 @@ func _play_death_pop() -> void:
 		_hit_tween.kill()
 	var tween := create_tween()
 	tween.set_parallel(true)
-	var pop := tween.tween_property(_visual, "scale", Vector2.ONE * DEATH_POP_SCALE, DEATH_POP_TIME)
+	var pop := tween.tween_property(_visual, "scale", _visual_base_scale * DEATH_POP_SCALE, DEATH_POP_TIME)
 	pop.set_trans(Tween.TRANS_QUAD)
 	pop.set_ease(Tween.EASE_OUT)
 	tween.tween_property(_visual, "modulate", Color(FLASH_COLOR.r, FLASH_COLOR.g, FLASH_COLOR.b, 0.0), DEATH_POP_TIME)
@@ -171,6 +176,8 @@ func is_at_front_row() -> bool:
 	return grid_pos.y >= GridManager.GRID_ROWS - 1
 
 func advance() -> void:
+	if is_boss:
+		return
 	if has_status(&"freeze"):
 		return
 	if is_at_front_row():

@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
-[ext_resource type="Texture2D" path="res://picture/金幣.png" id="2"]
+[ext_resource type="Texture2D" path="res://picture/分數加倍.PNG" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"score_x2"
-display_name = "分數加倍"
+display_name = "Double Score"
 effect_type = 1
-description = "分數獲得雙倍，持續到下次拉霸選擇"
+description = "Double score gain until next slot spin"
 icon = ExtResource("2")
-icon_region = Rect2(374, 314, 678, 733)
+icon_region = Rect2(20, 16, 1296, 1296)

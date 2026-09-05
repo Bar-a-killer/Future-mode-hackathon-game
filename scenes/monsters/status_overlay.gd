@@ -2,9 +2,9 @@ extends Node2D
 
 # 特效貼圖蓋過本體的比例，以及火焰要往上偏移多少（相對本體半高）
 # 火焰畫在怪物後面、冰殼畫在前面且半透，才不會把怪物種類蓋掉
-const ICE_COVER := 1.16
-const FIRE_BACK_COVER := 1.9
-const FIRE_FRONT_COVER := 1.05
+const ICE_COVER := 0.696
+const FIRE_BACK_COVER := 1.14
+const FIRE_FRONT_COVER := 0.63
 const FIRE_Y_BIAS := -0.32
 const ICE_ALPHA_MIN := 0.46
 const ICE_ALPHA_RANGE := 0.16

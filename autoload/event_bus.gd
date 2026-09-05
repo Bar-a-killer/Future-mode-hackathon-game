@@ -22,3 +22,5 @@ signal item_effect_applied(item: Resource)
 signal active_modifier_changed(item: Resource)
 signal status_applied(target: Node, status_name: StringName)
 signal status_expired(target: Node, status_name: StringName)
+signal boss_defeated
+signal boss_warning

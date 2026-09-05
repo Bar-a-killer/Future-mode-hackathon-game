@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckuwlcpw8avjf"
-path="res://.godot/imported/三倍發射量.png-48997add55017f77b58bac897ca04c01.ctex"
+uid="uid://b3tv8y3p2h4rm"
+path="res://.godot/imported/三倍發射量.PNG-752b5c0fffc98bf56ebeed64d638f071.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://picture/三倍發射量.png"
-dest_files=["res://.godot/imported/三倍發射量.png-48997add55017f77b58bac897ca04c01.ctex"]
+source_file="res://picture/三倍發射量.PNG"
+dest_files=["res://.godot/imported/三倍發射量.PNG-752b5c0fffc98bf56ebeed64d638f071.ctex"]
 
 [params]
 

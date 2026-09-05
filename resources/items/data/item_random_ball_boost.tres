@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://picture/加球20.png" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"random_ball_boost"
-display_name = "隨機加球數量"
+display_name = "Ball Boost"
 effect_type = 0
-description = "隨機增加1、5、10或20顆攻擊球"
+description = "Randomly add 1, 5, 10, or 20 balls"
+icon = ExtResource("2")
+icon_region = Rect2(0, 4, 1320, 1316)

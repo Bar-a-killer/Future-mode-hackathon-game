@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://picture/放大子彈.png" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"enlarge_bullet"
-display_name = "放大子彈"
+display_name = "Enlarge Bullet"
 effect_type = 2
-description = "攻擊球放大兩倍"
+description = "Bullets are 2x larger"
+icon = ExtResource("2")
+icon_region = Rect2(12, 16, 1312, 1308)

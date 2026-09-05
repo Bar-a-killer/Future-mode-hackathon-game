@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/monsters/monster_base.gd" id="1"]
+[ext_resource type="Texture2D" path="res://picture/boss綠星人king.PNG" id="2"]
+[ext_resource type="Script" path="res://scenes/monsters/status_overlay.gd" id="2_status"]
+[ext_resource type="Texture2D" path="res://assets/fx/fire_overlay.svg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/fx/ice_overlay.svg" id="4"]
+[ext_resource type="Resource" path="res://resources/monsters/data/boss_stats.tres" id="5"]
+
+[node name="Boss" type="Node2D"]
+script = ExtResource("1")
+stats = ExtResource("5")
+half_size = Vector2(46, 46)
+
+[node name="Visual" type="Sprite2D" parent="."]
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("2")
+
+[node name="StatusOverlay" type="Node2D" parent="."]
+script = ExtResource("2_status")
+
+[node name="Ice" type="Sprite2D" parent="StatusOverlay"]
+texture = ExtResource("4")
+
+[node name="FireA" type="Sprite2D" parent="StatusOverlay"]
+z_index = -1
+texture = ExtResource("3")
+
+[node name="FireB" type="Sprite2D" parent="StatusOverlay"]
+texture = ExtResource("3")
+flip_h = true

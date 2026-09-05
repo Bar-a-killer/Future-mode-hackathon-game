@@ -18,6 +18,7 @@ const MONSTER_SCENES: Array[PackedScene] = [
 	preload("res://scenes/monsters/big_melee_special.tscn"),
 	preload("res://scenes/monsters/small_ranged_special.tscn"),
 ]
+const BOSS_SCENE: PackedScene = preload("res://scenes/monsters/boss.tscn")
 const MIN_WAVE_MONSTER_COUNT := 4
 const MAX_WAVE_MONSTER_COUNT := 6
 const WAVE_SPAWN_ROW := 1
@@ -83,11 +84,31 @@ func _enter_state(s: State) -> void:
 		State.GAME_OVER_CHECK:
 			_enter_game_over_check()
 		State.GAME_OVER:
+			player.can_aim = false
 			Wallet.on_death()
 			EventBus.game_over.emit()
 
 func _enter_wave_spawn() -> void:
 	EventBus.wave_spawn_requested.emit(current_round)
+	if current_round == 9:
+		EventBus.boss_warning.emit()
+	if current_round == 10:
+		_spawn_boss()
+	else:
+		_spawn_wave()
+	_set_state(State.PLAYER_AIM)
+
+func _spawn_wave() -> void:
+	# 检查是否有boss存活，如果有则跳过该回合不生成小怪
+	var boss_exists := false
+	for monster in get_tree().get_nodes_in_group("monsters"):
+		if monster.is_boss:
+			boss_exists = true
+			break
+
+	if boss_exists:
+		return
+
 	var monster_count := randi_range(MIN_WAVE_MONSTER_COUNT, MAX_WAVE_MONSTER_COUNT)
 	for cell in GridManager.get_wave_spawn_cells(monster_count, WAVE_SPAWN_ROW):
 		var monster: MonsterBase = MONSTER_SCENES.pick_random().instantiate()
@@ -96,7 +117,16 @@ func _enter_wave_spawn() -> void:
 		get_tree().current_scene.add_child(monster)
 		GridManager.occupy(cell, monster)
 		EventBus.monster_spawned.emit(monster)
-	_set_state(State.PLAYER_AIM)
+
+func _spawn_boss() -> void:
+	var boss: MonsterBase = BOSS_SCENE.instantiate()
+	var boss_cell := Vector2i(3, WAVE_SPAWN_ROW)
+	boss.grid_pos = boss_cell
+	boss.position = GridManager.cell_to_world(boss_cell)
+	boss.is_boss = true
+	get_tree().current_scene.add_child(boss)
+	GridManager.occupy(boss_cell, boss)
+	EventBus.monster_spawned.emit(boss)
 
 func _enter_player_aim() -> void:
 	player.can_aim = true
@@ -111,8 +141,6 @@ func _on_post_volley_timeout() -> void:
 		_set_state(State.RESOLVE)
 
 func _enter_resolve() -> void:
-	for monster in get_tree().get_nodes_in_group("monsters"):
-		monster.tick_status()
 	_set_state(State.MONSTER_ATTACK)
 
 func _enter_monster_attack() -> void:
@@ -126,6 +154,10 @@ func _enter_monster_attack() -> void:
 		monster.advance()
 	for monster in monsters:
 		monster.execute_attack(player)
+	# tick_status 放在移動和攻擊「之後」，這樣本回合剛中的凍結才能先擋到這回合的前進和攻擊，
+	# 不會在還沒發揮效果前就被 RESOLVE 階段先扣掉一次而提前失效
+	for monster in monsters:
+		monster.tick_status()
 	_set_state(State.MOVEMENT_CHECK)
 
 func _enter_movement_check() -> void:

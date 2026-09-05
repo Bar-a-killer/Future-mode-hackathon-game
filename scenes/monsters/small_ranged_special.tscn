@@ -2,10 +2,11 @@
 
 [ext_resource type="PackedScene" path="res://scenes/monsters/monster_base.tscn" id="1"]
 [ext_resource type="Resource" path="res://resources/monsters/data/small_ranged_special_stats.tres" id="2"]
-[ext_resource type="Texture2D" path="res://assets/actors/monster_drone.svg" id="3"]
+[ext_resource type="Texture2D" path="res://picture/遠程怪 飛船.PNG" id="3"]
 
 [node name="SmallRangedSpecial" instance=ExtResource("1")]
 stats = ExtResource("2")
 
 [node name="Visual" parent="."]
+scale = Vector2(0.05, 0.05)
 texture = ExtResource("3")

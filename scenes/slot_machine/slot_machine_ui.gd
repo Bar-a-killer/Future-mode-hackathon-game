@@ -12,9 +12,9 @@ const LAND_TIME := 0.18
 const PICK_TIME := 0.3
 const LEVER_PULL_ANGLE := 0.62
 const TEXT_COLOR := Color(0.18, 0.12, 0.1)
-const SPINNING_TITLE := "轉動中…"
-const READY_TITLE := "選擇一個技能"
-const READY_HINT := "把游標移到轉輪上看說明"
+const SPINNING_TITLE := "Spinning..."
+const READY_TITLE := "Choose a skill"
+const READY_HINT := "Hover over the wheel to see details"
 
 @onready var panel: Control = $Panel
 @onready var background: ColorRect = $Panel/Background

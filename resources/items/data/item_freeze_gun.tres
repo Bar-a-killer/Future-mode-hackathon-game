@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://picture/冷凍槍.PNG" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"freeze_gun"
-display_name = "冷凍槍"
+display_name = "Freeze Gun"
 effect_type = 2
-description = "對燃燒中的敵人兩倍傷害，命中附加冰凍"
+description = "2x damage to burning enemies, add freeze on hit"
+icon = ExtResource("2")
+icon_region = Rect2(20, 28, 1296, 1284)

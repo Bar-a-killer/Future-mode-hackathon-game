@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
-[ext_resource type="Texture2D" path="res://picture/火球術.png" id="2"]
+[ext_resource type="Texture2D" path="res://picture/火球術.PNG" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"fireball"
-display_name = "火球術"
+display_name = "Fireball"
 effect_type = 2
-description = "對冰凍中的敵人兩倍傷害，命中附加燃燒"
+description = "2x damage to frozen enemies, add burn on hit"
 icon = ExtResource("2")
-icon_region = Rect2(280, 234, 811, 792)
+icon_region = Rect2(16, 12, 1300, 1308)

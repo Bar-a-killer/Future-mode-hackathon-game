@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
-[ext_resource type="Texture2D" path="res://picture/大波浪.png" id="2"]
+[ext_resource type="Texture2D" path="res://picture/波浪狀.PNG" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"wave_shot"
-display_name = "波浪狀"
+display_name = "Wave Shot"
 effect_type = 2
-description = "子彈以波浪狀軌跡飛行"
+description = "Bullets follow wavy trajectory"
 icon = ExtResource("2")
-icon_region = Rect2(252, 479, 788, 638)
+icon_region = Rect2(12, 16, 1308, 1296)

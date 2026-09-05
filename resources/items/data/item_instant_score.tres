@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://resources/items/item_data.gd" id="1"]
-[ext_resource type="Texture2D" path="res://picture/金幣.png" id="2"]
+[ext_resource type="Texture2D" path="res://picture/直接獲得分數.PNG" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"instant_score"
-display_name = "直接獲得分數"
+display_name = "Instant Score"
 effect_type = 0
-description = "直接獲得3倍分數球價值的分數"
+description = "Instantly gain 3x score orb value"
 icon = ExtResource("2")
-icon_region = Rect2(374, 314, 678, 733)
+icon_region = Rect2(8, 12, 1316, 1296)

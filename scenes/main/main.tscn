@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2"]
@@ -8,7 +8,9 @@
 [ext_resource type="PackedScene" path="res://scenes/slot_machine/slot_machine_ui.tscn" id="6"]
 [ext_resource type="Script" path="res://scenes/main/camera_shake.gd" id="7"]
 [ext_resource type="PackedScene" path="res://scenes/portal/portal.tscn" id="8"]
-[ext_resource type="Texture2D" path="res://picture/背景.png" id="9"]
+[ext_resource type="Texture2D" path="res://picture/背景版.png" id="9"]
+[ext_resource type="PackedScene" path="res://scenes/ui/victory_screen.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://scenes/ui/boss_warning_screen.tscn" id="11"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1")
@@ -31,6 +33,10 @@ position = Vector2(360, 1000)
 [node name="HUD" parent="." instance=ExtResource("3")]
 
 [node name="GameOverScreen" parent="." instance=ExtResource("4")]
+
+[node name="VictoryScreen" parent="." instance=ExtResource("10")]
+
+[node name="BossWarningScreen" parent="." instance=ExtResource("11")]
 
 [node name="SlotMachineUI" parent="." instance=ExtResource("6")]
 

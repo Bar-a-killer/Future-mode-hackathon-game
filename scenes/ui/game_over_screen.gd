@@ -15,9 +15,11 @@ func _ready() -> void:
 func _on_game_over() -> void:
 	score_label.text = "Score %d" % Wallet.score
 	panel.visible = true
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	panel.modulate.a = 0.0
 	label.pivot_offset = label.size / 2.0
 	label.scale = Vector2(1.25, 1.25)
+	MusicManager.fade_out()
 	var tween := create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(panel, "modulate:a", 1.0, FADE_TIME)
@@ -26,4 +28,5 @@ func _on_game_over() -> void:
 	settle.set_ease(Tween.EASE_OUT)
 
 func _on_restart_pressed() -> void:
+	MusicManager.reset()
 	get_tree().reload_current_scene()
